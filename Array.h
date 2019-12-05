@@ -1,8 +1,6 @@
 //
 //
 //
-#include <iostream>
-
 #ifndef WET_ARRAY_H
 #define WET_ARRAY_H
 
