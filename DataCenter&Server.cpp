@@ -23,7 +23,7 @@ int &Server::OS() {
     return os;
 }
 
-Server** Server::ptrToFreeList() {
+ListItem <Server*>* Server::ptrToFreeList() {
     return pointer;
 }
 
@@ -41,7 +41,7 @@ StatusType Server::updateID(int id) {
     return SUCCESS;
 }
 
-void Server::updatePointer(Server ** ptr) {
+void Server::updatePointer( ListItem <Server*>* ptr) {
     this->pointer  = ptr;
 }
 
@@ -56,8 +56,9 @@ DataCenter::DataCenter(int id, int num_of_servers): id(id), num_of_servers(num_o
     for (int i = 0; i < num_of_servers ; ++i) {
         servers[i].updateID(i);
         Server* list_component = &servers[i];
-        servers[i].updatePointer(&list_component);
         this->free_linux.PushBack(list_component);
+        servers[i].updatePointer(free_linux.GetTail());
+
     }
 }
 
@@ -90,16 +91,16 @@ StatusType DataCenter::UpdateServerOs(int serverID) {
         return  INVALID_INPUT;
     int unupdatedOS = servers[serverID].OS();
     servers[serverID].updateOS();
-    Server *list_item_to_move = *servers[serverID].ptrToFreeList();
+    //ListItem <Server*>* list_item_to_move = servers[serverID].ptrToFreeList();
     if (unupdatedOS == 1){
-        free_windows.DeleteItem(list_item_to_move);
-        free_linux.PushBack(list_item_to_move);
+        //free_windows.DeleteItem(list_item_to_move);
+        //free_linux.PushBack(list_item_to_move);
         num_of_windows--;
         num_of_windows++;
     }
     else {
-        free_linux.DeleteItem(list_item_to_move);
-        free_windows.PushBack(list_item_to_move);
+        //free_linux.DeleteItem(list_item_to_move);
+        //free_windows.PushBack(list_item_to_move);
         num_of_windows++;
         num_of_windows--;
     }
@@ -110,17 +111,21 @@ StatusType DataCenter::freeServer(int serverID) {
     if (serverID <0 || serverID>= num_of_servers)
         return  INVALID_INPUT;
     Server *list_component = &servers[serverID];
-    servers[serverID].updatePointer(&list_component);
-    if(servers[serverID].updateOS() ==1)
+    if(servers[serverID].updateOS() ==1){
         free_windows.PushBack(list_component);
-    else free_linux.PushBack(list_component);
+        servers[serverID].updatePointer(free_windows.GetTail());
+    }
+    else{
+        free_linux.PushBack(list_component);
+        servers[serverID].updatePointer(free_linux.GetTail());
+    }
     return SUCCESS;
 }
 
 StatusType DataCenter::assignServer(int serverID) {
     if (serverID <0 || serverID>= num_of_servers)
         return  INVALID_INPUT;
-    Server *list_component = &servers[serverID];
+    ListItem <Server*>* list_component = servers[serverID].ptrToFreeList();
     servers[serverID].updatePointer(nullptr);
     if(servers[serverID].updateOS() ==1)
         free_windows.DeleteItem(list_component);

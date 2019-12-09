@@ -17,19 +17,19 @@ typedef enum {
 class Server {
     int id;
     int os;
-    Server ** pointer;
+    ListItem <Server*>* pointer;
 public:
-    explicit Server(int id =0, int os = 0, Server ** pointer = nullptr):
+    explicit Server(int id =0, int os = 0,  ListItem <Server*>* pointer = nullptr):
                        id(id), os(os), pointer(pointer) {}
     ~Server()= default;
     Server(const Server& s) = default;
     Server& operator=(const Server& s);
     int & ID();
     int & OS();
-    Server ** ptrToFreeList();
+    ListItem <Server*>* ptrToFreeList();
     StatusType updateOS ();
     StatusType updateID(int id);
-    void updatePointer (Server ** ptr);
+    void updatePointer (ListItem <Server*>* ptr);
 };
 
 class DataCenter{
