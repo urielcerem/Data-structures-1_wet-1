@@ -87,17 +87,17 @@ int getBalance(AVLNode<T>* node)
 
 //Insert a key of type T into the AVL tree 
 template <class T>
-AVLNode<T>* Insert(AVLNode<T>* node, T key) {
+AVLNode<T>* InsertDataByKey(AVLNode<T>* node, T data , double key) {
 	if (node == NULL)
 	{
-		AVLNode<T>* new_node = new AVLNode<T>(key);
+		AVLNode<T>* new_node = new AVLNode<T>(data, key);
 		return new_node;
 	}
 
 	if (key < node->key)
-		node->left = Insert(node->left, key);
+		node->left = InsertDataByKey(node->left, data, key);
 	else if (key > node->key)
-		node->right = Insert(node->right, key);
+		node->right = InsertDataByKey(node->right, data, key);
 	else // in case keys are equel
 		return node;
 
@@ -242,24 +242,26 @@ void inOrder(AVLNode<T> *root)
 	if (root != NULL)
 	{
 		inOrder(root->left);
-		cout << root->key << " ";
+		cout << root->key << " -> " << root->data << "      ";
 		inOrder(root->right);
 	}
 }
 
 template <class T>
-void AVLTree<T>::DeleteKey(T key) {
+void AVLTree<T>::Delete(double key) {
 	root = deleteNode(root, key);
 }
 
 template <class T>
-void AVLTree<T>::InsertKey(T key) {
-	root = Insert(root, key);
+void AVLTree<T>::Insert(T data, double key) {
+	root = InsertDataByKey(root, data, key);
 }
 
 template <class T>
-AVLNode<T>* AVLTree<T>::Find(T key) {
-	return findKey(root, key);
+T* AVLTree<T>::Find(double key) {
+	AVLNode<T>* data_node;
+	data_node = findKey(root, key);
+	return data_node->data;
 }
 
 
@@ -267,5 +269,3 @@ template <class T>
 void AVLTree<T>::PrintInOrder() {
 	inOrder(root);
 }
-
-

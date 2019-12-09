@@ -6,17 +6,18 @@
 template <class T>
 class AVLNode {
 public:
-	T key;
+	T data;
+	double key;
 	AVLNode *left, *right;
 	int depth;
 
-	AVLNode(T k) : key(k), depth(1), left(NULL), right(NULL) {}
+	AVLNode(T d , double k) : data(d), key(k), depth(1), left(NULL), right(NULL) {}
 	~AVLNode() {}
 };
 
 
 
-/* AVL tree */
+/* AVL tree that sort <T> type of datas by keys*/
 template <class T>
 class AVLTree {
 public:
@@ -25,9 +26,9 @@ public:
 	AVLTree() : root(NULL) {}
 	~AVLTree();
 
-	void InsertKey(T key);
-	void DeleteKey(T key);
-	AVLNode<T>* Find(T key);
+	void Insert(T data, double key);
+	void Delete(double key);
+	T* Find(double key);
 
 	void PrintInOrder();//for debugging purposes
 };
