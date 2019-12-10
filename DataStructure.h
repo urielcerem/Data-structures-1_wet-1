@@ -33,7 +33,8 @@ public:
     StatusTypeDS RemoveRank(double key, int OS);
     DataCenter *  getDataCenter(double key);
     double getRankedID(double key, int OS);
-
+	int NumOfDataCenters();
+	AVLNode<double>* GetRootByOs(int os);
 };
 
 #endif //WET_1_DATASTRUCTURE_H
