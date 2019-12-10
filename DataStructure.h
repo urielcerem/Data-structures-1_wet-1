@@ -1,3 +1,4 @@
+
 //
 // Created by Uriel on 10-Dec-19.
 //
@@ -38,7 +39,8 @@ public:
     AVLTree <double>  * RankedLinuxTree();
     AVLTree <double>  * RankedWindowsTree();
     int NumOfDataCenters ();
-
+    AVLNode<double>* GetRootByOs(int os);
 };
 
 #endif //WET_1_DATASTRUCTURE_H
+

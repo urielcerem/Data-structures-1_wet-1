@@ -1,3 +1,4 @@
+
 //
 // Created by Uriel on 10-Dec-19.
 //
@@ -75,3 +76,14 @@ AVLTree<double> *DataStructure::RankedLinuxTree() {
 AVLTree<double> *DataStructure::RankedWindowsTree() {
     return &ranked_by_windows;
 }
+AVLNode<double>* DataStructure::GetRootByOs(int os) {
+	switch (os) {
+	case 0:
+		return ranked_by_linux.root;
+	case 1:
+		return ranked_by_windows.root;
+	default:
+		return NULL;
+	}
+}
+
