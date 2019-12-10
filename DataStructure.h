@@ -24,6 +24,7 @@ class DataStructure{
     int num_of_data_centers;
 
 public:
+
     explicit DataStructure(int num_centers = 0): num_of_data_centers(num_centers) {}
     ~DataStructure() = default;
     DataStructure(const DataStructure & DS) = default;
@@ -37,7 +38,6 @@ public:
     AVLTree <double>  * RankedLinuxTree();
     AVLTree <double>  * RankedWindowsTree();
     int NumOfDataCenters ();
-
 
 };
 

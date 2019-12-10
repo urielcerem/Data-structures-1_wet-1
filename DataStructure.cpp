@@ -59,6 +59,7 @@ double DataStructure::getRankedID(double key, int OS) {
     return 0;
 }
 
+
 int DataStructure::NumOfDataCenters() {
     return num_of_data_centers;
 }
