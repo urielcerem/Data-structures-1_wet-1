@@ -126,10 +126,18 @@ StatusTypeDC DataCenter::assignServer(int serverID) {
     if (serverID <0 || serverID>= num_of_servers)
         return  INVALID_INPUT_DC;
     ListItem <Server*>* list_component = servers[serverID].ptrToFreeList();
+    if (list_component == nullptr)
+        return  FAILURE_DC;
     servers[serverID].updatePointer(nullptr);
-    if(servers[serverID].updateOS() ==1)
+    if(servers[serverID].OS() ==1)
         free_windows.DeleteItem(list_component);
     else free_linux.DeleteItem(list_component);
     return SUCCESS_DC;
+}
+
+Server * DataCenter::getServer(int serverID) {
+    if (serverID <0 || serverID>= num_of_servers)
+        return nullptr;
+    return &servers[serverID];
 }
 
