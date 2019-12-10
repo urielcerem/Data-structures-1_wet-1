@@ -1,3 +1,4 @@
+
 //
 // Created by Uriel on 10-Dec-19.
 //
@@ -59,10 +60,22 @@ double DataStructure::getRankedID(double key, int OS) {
     return 0;
 }
 
+
 int DataStructure::NumOfDataCenters() {
-	return num_of_data_centers;
+    return num_of_data_centers;
 }
 
+AVLTree<DataCenter> *DataStructure::DataCenterTree() {
+    return &data_centers_tree;
+}
+
+AVLTree<double> *DataStructure::RankedLinuxTree() {
+    return &ranked_by_linux;
+}
+
+AVLTree<double> *DataStructure::RankedWindowsTree() {
+    return &ranked_by_windows;
+}
 AVLNode<double>* DataStructure::GetRootByOs(int os) {
 	switch (os) {
 	case 0:
@@ -73,3 +86,4 @@ AVLNode<double>* DataStructure::GetRootByOs(int os) {
 		return NULL;
 	}
 }
+
