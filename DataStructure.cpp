@@ -58,3 +58,20 @@ double DataStructure::getRankedID(double key, int OS) {
         return *ranked_by_linux.Find(key);
     return 0;
 }
+
+
+int DataStructure::NumOfDataCenters() {
+    return num_of_data_centers;
+}
+
+AVLTree<DataCenter> *DataStructure::DataCenterTree() {
+    return &data_centers_tree;
+}
+
+AVLTree<double> *DataStructure::RankedLinuxTree() {
+    return &ranked_by_linux;
+}
+
+AVLTree<double> *DataStructure::RankedWindowsTree() {
+    return &ranked_by_windows;
+}

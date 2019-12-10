@@ -24,7 +24,8 @@ class DataStructure{
     int num_of_data_centers;
 
 public:
-    DataStructure() = default;
+
+    explicit DataStructure(int num_centers = 0): num_of_data_centers(num_centers) {}
     ~DataStructure() = default;
     DataStructure(const DataStructure & DS) = default;
     StatusTypeDS AddDataCenter (DataCenter DS, double key);
@@ -33,6 +34,10 @@ public:
     StatusTypeDS RemoveRank(double key, int OS);
     DataCenter *  getDataCenter(double key);
     double getRankedID(double key, int OS);
+    AVLTree <DataCenter> * DataCenterTree();
+    AVLTree <double>  * RankedLinuxTree();
+    AVLTree <double>  * RankedWindowsTree();
+    int NumOfDataCenters ();
 
 };
 
