@@ -51,5 +51,6 @@ public:
     StatusTypeDC UpdateServerOs(int serverID);
     StatusTypeDC freeServer(int serverID);
     StatusTypeDC assignServer (int serverID);
+    Server * getServer (int serverID);
 };
 #endif //WET_1_DATACENTER_SERVER_H
