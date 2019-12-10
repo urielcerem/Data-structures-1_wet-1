@@ -1,18 +1,16 @@
-//
-// Created by Uriel on 04-Dec-19.
-//
-#include "Array.h"
-#include "list.h"
 
 #ifndef WET_1_DATACENTER_SERVER_H
 #define WET_1_DATACENTER_SERVER_H
 
+#include "Array.h"
+#include "list.h"
+
 typedef enum {
-    SUCCESS = 0,
-    FAILURE = -1,
-    ALLOCATION_ERROR = -2,
-    INVALID_INPUT = -3
-} StatusType;
+    SUCCESS_DC = 0,
+    FAILURE_DC = -1,
+    ALLOCATION_ERROR_DC = -2,
+    INVALID_INPUT_DC = -3
+} StatusTypeDC;
 
 class Server {
     int id;
@@ -27,8 +25,8 @@ public:
     int & ID();
     int & OS();
     ListItem <Server*>* ptrToFreeList();
-    StatusType updateOS ();
-    StatusType updateID(int id);
+    StatusTypeDC updateOS ();
+    StatusTypeDC updateID(int id);
     void updatePointer (ListItem <Server*>* ptr);
 };
 
@@ -50,8 +48,8 @@ public:
     int & windowsAmont();
     List <Server*> & FreeLinuxList();
     List <Server*> & FreeWindowsList();
-    StatusType UpdateServerOs(int serverID);
-    StatusType freeServer(int serverID);
-    StatusType assignServer (int serverID);
+    StatusTypeDC UpdateServerOs(int serverID);
+    StatusTypeDC freeServer(int serverID);
+    StatusTypeDC assignServer (int serverID);
 };
 #endif //WET_1_DATACENTER_SERVER_H

@@ -27,18 +27,18 @@ ListItem <Server*>* Server::ptrToFreeList() {
     return pointer;
 }
 
-StatusType Server::updateOS() {
+StatusTypeDC Server::updateOS() {
     if (os ==1)
         this->os = 0;
     else this->os = 1;
-    return SUCCESS;
+    return SUCCESS_DC;
 }
 
-StatusType Server::updateID(int id) {
+StatusTypeDC Server::updateID(int id) {
     if (id < 0)
-        return INVALID_INPUT;
+        return INVALID_INPUT_DC;
     this->id = id;
-    return SUCCESS;
+    return SUCCESS_DC;
 }
 
 void Server::updatePointer( ListItem <Server*>* ptr) {
@@ -86,9 +86,9 @@ List<Server*> &DataCenter::FreeWindowsList() {
     return free_windows;
 }
 
-StatusType DataCenter::UpdateServerOs(int serverID) {
+StatusTypeDC DataCenter::UpdateServerOs(int serverID) {
     if (serverID <0 || serverID>= num_of_servers)
-        return  INVALID_INPUT;
+        return  INVALID_INPUT_DC;
     int unupdatedOS = servers[serverID].OS();
     servers[serverID].updateOS();
     //ListItem <Server*>* list_item_to_move = servers[serverID].ptrToFreeList();
@@ -104,12 +104,12 @@ StatusType DataCenter::UpdateServerOs(int serverID) {
         num_of_windows++;
         num_of_windows--;
     }
-    return SUCCESS;
+    return SUCCESS_DC;
 }
 
-StatusType DataCenter::freeServer(int serverID) {
+StatusTypeDC DataCenter::freeServer(int serverID) {
     if (serverID <0 || serverID>= num_of_servers)
-        return  INVALID_INPUT;
+        return  INVALID_INPUT_DC;
     Server *list_component = &servers[serverID];
     if(servers[serverID].updateOS() ==1){
         free_windows.PushBack(list_component);
@@ -119,17 +119,17 @@ StatusType DataCenter::freeServer(int serverID) {
         free_linux.PushBack(list_component);
         servers[serverID].updatePointer(free_linux.GetTail());
     }
-    return SUCCESS;
+    return SUCCESS_DC;
 }
 
-StatusType DataCenter::assignServer(int serverID) {
+StatusTypeDC DataCenter::assignServer(int serverID) {
     if (serverID <0 || serverID>= num_of_servers)
-        return  INVALID_INPUT;
+        return  INVALID_INPUT_DC;
     ListItem <Server*>* list_component = servers[serverID].ptrToFreeList();
     servers[serverID].updatePointer(nullptr);
     if(servers[serverID].updateOS() ==1)
         free_windows.DeleteItem(list_component);
     else free_linux.DeleteItem(list_component);
-    return SUCCESS;
+    return SUCCESS_DC;
 }
 
