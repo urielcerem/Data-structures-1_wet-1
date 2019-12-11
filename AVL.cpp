@@ -5,7 +5,7 @@
 using namespace std;
 
 //get the maximum of two numbers 
-int getMax(int first, int second) {
+static int getMax(int first, int second) {
 	return (first > second) ? first : second;
 }
 
@@ -222,7 +222,7 @@ AVLNode<T>* deleteNode(AVLNode<T>* root, int key)
 }
 
 template <class T>
-AVLNode<T>* findKey(AVLNode<T>* root,T key) {
+AVLNode<T>* findKey(AVLNode<T>* root,double key) {
 	if (root == NULL)
 		return root;
 
@@ -258,7 +258,7 @@ void AVLTree<T>::Insert(T data, double key) {
 }
 
 template <class T>
-T* AVLTree<T>::Find(double key) {
+T AVLTree<T>::Find(double key) {
 	AVLNode<T>* data_node;
 	data_node = findKey(root, key);
 	return data_node->data;

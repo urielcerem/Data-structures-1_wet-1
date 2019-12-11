@@ -21,9 +21,9 @@ Array<T>& Array<T>::operator=(const Array& a) {
         return *this;
     }
     delete[] data;
-    data = new T[a.size];
+    data = new T[a.size_a];
     size_a = a.size_a;
-    for (int i = 0; i < a.size; ++i) {
+    for (int i = 0; i < a.size_a; ++i) {
         data[i] = a.data[i];
     }
     return *this;
@@ -43,7 +43,7 @@ template<class T>
 T &Array<T>::operator[](int index) {
     if (index <0 || index >=size_a)
         throw BadIndex(index);
-    return &data[index];
+    return data[index];
 }
 
 template<class T>

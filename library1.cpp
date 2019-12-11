@@ -7,6 +7,11 @@
 #include "Array.h"
 #include "AVL.h"
 #include "DataCenter&Server.h"
+#include "DataStructure.cpp"
+#include "list.cpp"
+#include "Array.cpp"
+#include "AVL.cpp"
+#include "DataCenter&Server.cpp"
 #include "library1.h"
 
 void *Init() {
@@ -135,7 +140,7 @@ void FillArray(int** dataCenters, int* conter , AVLNode<double>* root) {
     if (root != NULL)
     {
         FillArray(dataCenters, conter, root->left);
-        (*dataCenters)[*conter] = root->key;
+        (*dataCenters)[*conter] = root->data;
         (*conter)++;
         FillArray(dataCenters, conter, root->right);
     }

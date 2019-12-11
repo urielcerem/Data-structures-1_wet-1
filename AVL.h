@@ -28,7 +28,7 @@ public:
 
 	void Insert(T data, double key);
 	void Delete(double key);
-	T* Find(double key);
+	T Find(double key);
 
 	void PrintInOrder();//for debugging purposes
 };
