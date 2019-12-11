@@ -49,14 +49,14 @@ StatusTypeDS DataStructure::RemoveRank(double key, int OS) {
 }
 
 DataCenter *DataStructure::getDataCenter(double key) {
-    return &data_centers_tree.Find(key);
+    return data_centers_tree.Find(key);
 }
 
 double DataStructure::getRankedID(double key, int OS) {
     if (OS == 1)
-        return ranked_by_windows.Find(key);
+        return *ranked_by_windows.Find(key);
     else if (OS == 0)
-        return ranked_by_linux.Find(key);
+        return *ranked_by_linux.Find(key);
     return 0;
 }
 
@@ -76,7 +76,6 @@ AVLTree<double> *DataStructure::RankedLinuxTree() {
 AVLTree<double> *DataStructure::RankedWindowsTree() {
     return &ranked_by_windows;
 }
-
 AVLNode<double>* DataStructure::GetRootByOs(int os) {
 	switch (os) {
 	case 0:

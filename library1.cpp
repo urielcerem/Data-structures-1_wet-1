@@ -7,11 +7,6 @@
 #include "Array.h"
 #include "AVL.h"
 #include "DataCenter&Server.h"
-#include "DataStructure.cpp"
-#include "list.cpp"
-#include "Array.cpp"
-#include "AVL.cpp"
-#include "DataCenter&Server.cpp"
 #include "library1.h"
 
 void *Init() {
@@ -31,15 +26,15 @@ StatusType AddDataCenter(void *DS, int dataCenterID, int numOfServers) {
     //if (&data_center == NULL)  //testing memory alocations of servers
     StatusTypeDS output_ds;
     output_ds = ds->AddDataCenter(data_center, dataCenterID);
-    if (output_ds != SUCCESS_DC)
+    if (output_ds != SUCCESS_DS)
         return (StatusType)output_ds;
     double linux_key = data_center.linuxAmount() + (1 - 1 / dataCenterID);
     double windows_key = data_center.windowsAmont() + (1 - 1 / dataCenterID);
     output_ds = ds->AddRank(dataCenterID, linux_key, 0);
-    if (output_ds != SUCCESS_DC)
+    if (output_ds != SUCCESS_DS)
         return (StatusType)output_ds;
     output_ds = ds->AddRank(dataCenterID, windows_key, 1);
-    if (output_ds != SUCCESS_DC)
+    if (output_ds != SUCCESS_DS)
         return (StatusType)output_ds;
     return SUCCESS;
 }
@@ -53,15 +48,15 @@ StatusType RemoveDataCenter(void *DS, int dataCenterID) {
         return FAILURE;
     StatusTypeDS output_ds;
     output_ds = ds->RemoveDataCenter(dataCenterID);
-    if (output_ds != SUCCESS_DC)
+    if (output_ds != SUCCESS_DS)
         return (StatusType)output_ds;
     double linux_key = data_center->linuxAmount() + (1 - 1 / dataCenterID);
     double windows_key = data_center->windowsAmont() + (1 - 1 / dataCenterID);
     output_ds = ds->RemoveRank(linux_key, 0);
-    if (output_ds != SUCCESS_DC)
+    if (output_ds != SUCCESS_DS)
         return (StatusType)output_ds;
     output_ds = ds->RemoveRank(windows_key, 1);
-    if (output_ds != SUCCESS_DC)
+    if (output_ds != SUCCESS_DS)
         return (StatusType)output_ds;
     return SUCCESS;
 }
@@ -136,13 +131,13 @@ StatusType GetDataCentersByOS(void *DS, int os, int **dataCenters, int* numOfDat
     return SUCCESS;
 }
 
-void FillArray(int** dataCenters, int* conter , AVLNode<double>* root) {
+void FillArray(int** dataCenters, int* counter , AVLNode<double>* root) {
     if (root != NULL)
     {
-        FillArray(dataCenters, conter, root->left);
-        (*dataCenters)[*conter] = root->data;
-        (*conter)++;
-        FillArray(dataCenters, conter, root->right);
+        FillArray(dataCenters, counter, root->left);
+        (*dataCenters)[*counter] = root->key;
+        (*counter)++;
+        FillArray(dataCenters, counter, root->right);
     }
 }
 
