@@ -177,7 +177,7 @@ AVLNode<T> * getNextMinValue(AVLNode<T>* node)
 
 // delete a node from AVL tree with the given key
 template <class T>
-AVLNode<T>* deleteNode(AVLNode<T>* root, int key)
+AVLNode<T>* deleteNode(AVLNode<T>* root, double key)
 {
     if (root == NULL)
         return root;
@@ -258,10 +258,9 @@ AVLNode<T>* findKey(AVLNode<T>* root,double key) {
         return root;
 
     if (key < root->key)
-        root->left = findKey(root->left, key);
-
+        return findKey(root->left, key);
     else if (key > root->key)
-        root->right = findKey(root->right, key);
+        return findKey(root->right, key);
     else
         return root;
 }

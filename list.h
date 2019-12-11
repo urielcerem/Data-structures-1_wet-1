@@ -9,12 +9,12 @@ using namespace std;
 template<class T>
 class ListItem {
 
-T data;
-ListItem<T>* next;
-ListItem<T>* prev;
+	T data;
+	ListItem<T>* next;
+	ListItem<T>* prev;
 
 public:
-	ListItem(const T& value) : data(value), next(NULL), prev(NULL) {} 
+	ListItem(const T& value) : data(value), next(NULL), prev(NULL) {}
 	~ListItem() {}
 
 	void SetValue(const T& value);
@@ -32,12 +32,12 @@ private:
 template <class T>
 class List {
 
-ListItem<T>* head;
-ListItem<T>* tail;
+	ListItem<T>* head;
+	ListItem<T>* tail;
 
 public:
 	List() : head(NULL), tail(NULL) {}
-	~List();
+	~List() {}
 
 	//insert value into a listitem type and then insert
 	//the listitem into the begining of the list
@@ -81,96 +81,98 @@ public:
 
 template <class T>
 void ListItem<T>::SetValue(const T& value) {
-    data = value;
+	data = value;
 }
 
 template <class T>
 const T& ListItem<T>::GetValue() const {
-    return data;
+	return data;
 }
 
 template <class T>
 void ListItem<T>::SetNext(ListItem<T>* next_item) {
-    next = next_item;
+	next = next_item;
 }
 
 template <class T>
 ListItem<T>* ListItem<T>::GetNext() const {
-    return next;
+	return next;
 }
 
 template <class T>
 void ListItem<T>::SetPrev(ListItem<T>* prev_item) {
-    prev = prev_item;
+	prev = prev_item;
 }
 
 template <class T>
 ListItem<T>* ListItem<T>::GetPrev() const {
-    return prev;
+	return prev;
 }
 
 template <class T>
 void ListItem<T>::Print() const {
-    std::cout << data << std::endl;
+	std::cout << data << std::endl;
 }
 
 
 
-
+/*
 template <class T>
 List<T>::~List() {
-    ListItem<T>* current = head;
+	ListItem<T>* current = head;
 
-    while (current) {
-        ListItem<T>* next_item = current->GetNext();
-        delete(current);
-        current = next_item;
-    }
+	while (current) {
+		ListItem<T>* next_item = current->GetNext();
+		delete(current);
+		current = next_item;
+	}
 }
+*/
+
 
 // O(1)
 template <class T>
 ListItem<T>* List<T>::PushFront(const T& value) {
-    ListItem<T>* item = new(std::nothrow) ListItem<T>(value);
+	ListItem<T>* item = new(std::nothrow) ListItem<T>(value);
 
-    if (item) {
-        if (!head) {
-            // Special case, list is empty
-            head = item;
-            tail = item;
-        }
-        else {
-            item->SetNext(head);
-            head = item;
-        }
-        return item;
-    }
-    else {
-        return NULL; //  memory allocation problam
-    }
+	if (item) {
+		if (!head) {
+			// Special case, list is empty
+			head = item;
+			tail = item;
+		}
+		else {
+			item->SetNext(head);
+			head = item;
+		}
+		return item;
+	}
+	else {
+		return NULL; //  memory allocation problam
+	}
 }
 
 // O(1)
 template <class T>
 ListItem<T>* List<T>::PushBack(const T& value) {
-    ListItem<T>* item = new (std::nothrow) ListItem<T>(value);
+	ListItem<T>* item = new (std::nothrow) ListItem<T>(value);
 
-    if (item) {
-        if (!head) {
-            // Special case, list is empty
-            head = item;
-            tail = item;
-        }
-        else {
-            tail->SetNext(item);
-            item->SetPrev(tail);
-            tail = item;
-        }
-        return item;
-    }
-    else {
-        return NULL;
-    }
+	if (item) {
+		if (!head) {
+			// Special case, list is empty
+			head = item;
+			tail = item;
+		}
+		else {
+			tail->SetNext(item);
+			item->SetPrev(tail);
+			tail = item;
+		}
+		return item;
+	}
+	else {
+		return NULL;
+	}
 }
 
 
@@ -227,21 +229,21 @@ bool List<T>::PopBack(T* value) {
 // O(n)
 template <class T>
 void List<T>::Print() const {
-    ListItem<T>* e;
-    for (e = head; e; e = e->GetNext())
-        e->Print();
-    std::cout << std::endl <<"end of the list bitch"<<std::endl << std::endl;
+	ListItem<T>* e;
+	for (e = head; e; e = e->GetNext())
+		e->Print();
+	std::cout << std::endl << "end of the list bitch" << std::endl << std::endl;
 }
 
 // O(n)
 template <class T>
 int List<T>::size() const {
-    ListItem<T>* e;
-    int count = 0;
+	ListItem<T>* e;
+	int count = 0;
 
-    for (e = head; e; e = e->GetNext()) ++count;
+	for (e = head; e; e = e->GetNext()) ++count;
 
-    return count;
+	return count;
 }
 
 
@@ -280,14 +282,14 @@ bool List<T>::Insert(const T& value, const int& position) {
 
 template <class T>
 ListItem<T>* List<T>::Insert_after(ListItem<T>* item_before, const T& value) {
-    ListItem<T>* new_element = new (std::nothrow) ListItem<T>(value);
-    if (!new_element)
-        return NULL;
+	ListItem<T>* new_element = new (std::nothrow) ListItem<T>(value);
+	if (!new_element)
+		return NULL;
 
-    new_element->SetNext(item_before->GetNext());
-    new_element->SetPrev(item_before);
-    item_before->SetNext(new_element);
-    return new_element;
+	new_element->SetNext(item_before->GetNext());
+	new_element->SetPrev(item_before);
+	item_before->SetNext(new_element);
+	return new_element;
 }
 
 
@@ -336,34 +338,34 @@ bool List<T>::Delete(const int& position) {
 
 template <class T>
 bool List<T>::DeleteItem(ListItem<T>* item_to_delete) {
-    if (!item_to_delete) {
-        return false;
-    }
-    ListItem<T>* prev_item = item_to_delete->GetPrev();
-    ListItem<T>* next_item = item_to_delete->GetNext();
+	if (!item_to_delete) {
+		return false;
+	}
+	ListItem<T>* prev_item = item_to_delete->GetPrev();
+	ListItem<T>* next_item = item_to_delete->GetNext();
 
-    if (item_to_delete == head) {
-        head = next_item;
-    }
+	if (item_to_delete == head) {
+		head = next_item;
+	}
 
-    if (item_to_delete == tail) {
-        tail = prev_item;
-    }
-    if(prev_item != NULL) prev_item->SetNext(next_item);
+	if (item_to_delete == tail) {
+		tail = prev_item;
+	}
+	if (prev_item != NULL) prev_item->SetNext(next_item);
 
-    if (next_item != NULL) next_item->SetPrev(prev_item);
+	if (next_item != NULL) next_item->SetPrev(prev_item);
 
-    delete item_to_delete;
-    return true;
+	delete item_to_delete;
+	return true;
 }
 
 template <class T>
 T List<T>::PopItem(ListItem<T>* item_to_pop) {
-    T value_to_return = item_to_pop->GetValue();
-    if (DeleteItem(item_to_pop))
-        return value_to_return;
-    else
-        return NULL;
+	T value_to_return = item_to_pop->GetValue();
+	if (DeleteItem(item_to_pop))
+		return value_to_return;
+	else
+		return NULL;
 
 }
 
@@ -411,12 +413,12 @@ bool List<T>::Get(const int& position, T* value) {
 
 template <class T>
 ListItem<T>* List<T>::GetHead() const {
-    return head;
+	return head;
 }
 
 template <class T>
 ListItem<T>* List<T>::GetTail() const {
-    return tail;
+	return tail;
 }
 
 
