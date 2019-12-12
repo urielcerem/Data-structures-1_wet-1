@@ -7,7 +7,7 @@
 #include "list.h"
 #include "Array.h"
 #include "AVL.h"
-#include "DataCenter&Server.h"
+#include "DataCenterAndServer.h"
 
 StatusTypeDS DataStructure::AddDataCenter(DataCenter DS, double key) {
 	data_centers_tree.Insert(DS, key);
