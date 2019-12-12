@@ -16,6 +16,18 @@ void *Init() {
 
 void FillArray(int** dataCenters, int* counter, AVLNode<double>* root);
 
+void dubugPrinting(DataStructure* ds) {
+	std::cout << "data_centers :" << std::endl;
+	ds->data_centers_tree.PrintInOrder();
+	std::cout << "data centers root = " << ds->data_centers_tree.root->data.ID() << std::endl;
+	std::cout << "linux rank:" << std::endl;
+	ds->ranked_by_linux.PrintInOrder();
+	std::cout << "linux rank root = " << ds->ranked_by_linux.root->data << std::endl;
+	std::cout << "windows rank" << std::endl;
+	ds->ranked_by_windows.PrintInOrder();
+	std::cout << "windows rank root = " << ds->ranked_by_windows.root->data << std::endl;
+}
+
 StatusType AddDataCenter(void *DS, int dataCenterID, int numOfServers) {
 	if (DS == NULL || dataCenterID < 1 || numOfServers < 1)
 		return INVALID_INPUT;
@@ -36,6 +48,9 @@ StatusType AddDataCenter(void *DS, int dataCenterID, int numOfServers) {
 	output_ds = ds->AddRank(dataCenterID, windows_key, 1);
 	if (output_ds != SUCCESS_DS)
 		return (StatusType)output_ds;
+
+	//dubugPrinting(ds);
+
 	return SUCCESS;
 }
 
@@ -60,6 +75,9 @@ StatusType RemoveDataCenter(void *DS, int dataCenterID) {
 	output_ds = ds->RemoveDataCenter(dataCenterID);
 	if (output_ds != SUCCESS_DS)
 		return (StatusType)output_ds;
+
+	//dubugPrinting(ds);
+
 	return SUCCESS;
 }
 
@@ -134,6 +152,8 @@ StatusType RequestServer(void *DS, int dataCenterID, int serverID, int os,
 		DC->assignServer(s->ID());
 		*assignedID = serverID;
 	}
+
+	//dubugPrinting(DC_manager);
 
 	return SUCCESS;
 }

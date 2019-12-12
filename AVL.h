@@ -71,7 +71,7 @@ template <class T>
 AVLNode<T>* RotateRight(AVLNode<T>* node)
 {
     AVLNode<T>* left_node = node->left;
-    AVLNode<T>* right_node = node->right;
+    AVLNode<T>* right_node = left_node->right;
 
     // Perform rotation
     left_node->right = node;
@@ -273,7 +273,7 @@ void inOrder(AVLNode<T> *root)
     if (root != NULL)
     {
         inOrder(root->left);
-        cout << root->key << " -> " << root->data << "      ";
+        cout << root->key << std::endl;
         inOrder(root->right);
     }
 }

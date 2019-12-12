@@ -197,7 +197,7 @@ static errorType OnInit(void** DS, const char* const command) {
 
 static errorType OnAddDataCenter(void* DS, const char* const command) {
     int dataCenterID, numOfServers;
-    ValidateRead(sscanf(command, "%d %d", &dataCenterID, &numOfServers), 2, "%s failed.\n", commandStr[ADDDATACENTER_CMD]);
+    ValidateRead(sscanf_s(command, "%d %d", &dataCenterID, &numOfServers), 2, "%s failed.\n", commandStr[ADDDATACENTER_CMD]);
     StatusType res = AddDataCenter(DS, dataCenterID, numOfServers);
 
     if (res != SUCCESS) {
@@ -211,7 +211,7 @@ static errorType OnAddDataCenter(void* DS, const char* const command) {
 
 static errorType OnRemoveDataCenter(void* DS, const char* const command) {
     int dataCenterID;
-    ValidateRead(sscanf(command, "%d", &dataCenterID), 1, "%s failed.\n", commandStr[REMOVEDATACENTER_CMD]);
+    ValidateRead(sscanf_s(command, "%d", &dataCenterID), 1, "%s failed.\n", commandStr[REMOVEDATACENTER_CMD]);
     StatusType res = RemoveDataCenter(DS, dataCenterID);
 
     if (res != SUCCESS) {
@@ -225,7 +225,7 @@ static errorType OnRemoveDataCenter(void* DS, const char* const command) {
 
 static errorType OnRequestServer(void* DS, const char* const command) {
     int dataCenterID, serverID, os, assignedID;
-    ValidateRead(sscanf(command, "%d %d %d", &dataCenterID, &serverID, &os), 3, "%s failed.\n", commandStr[REQUESTSERVER_CMD]);
+    ValidateRead(sscanf_s(command, "%d %d %d", &dataCenterID, &serverID, &os), 3, "%s failed.\n", commandStr[REQUESTSERVER_CMD]);
     StatusType res = RequestServer(DS, dataCenterID, serverID, os, &assignedID);
 
     if (res != SUCCESS) {
@@ -239,7 +239,7 @@ static errorType OnRequestServer(void* DS, const char* const command) {
 
 static errorType OnFreeServer(void* DS, const char* const command) {
     int dataCenterID, serverID;
-    ValidateRead(sscanf(command, "%d %d", &dataCenterID, &serverID), 2, "%s failed.\n", commandStr[FREESERVER_CMD]);
+    ValidateRead(sscanf_s(command, "%d %d", &dataCenterID, &serverID), 2, "%s failed.\n", commandStr[FREESERVER_CMD]);
     StatusType res = FreeServer(DS, dataCenterID, serverID);
 
     if (res != SUCCESS) {
@@ -254,7 +254,7 @@ static errorType OnFreeServer(void* DS, const char* const command) {
 static errorType OnGetDataCentersByOS(void* DS, const char* const command) {
     int os, numOfDataCenters;
     int *dataCenters;
-    ValidateRead(sscanf(command, "%d", &os), 1, "%s failed.\n", commandStr[GETDATACENTERSBYOS_CMD]);
+    ValidateRead(sscanf_s(command, "%d", &os), 1, "%s failed.\n", commandStr[GETDATACENTERSBYOS_CMD]);
     StatusType res = GetDataCentersByOS(DS, os, &dataCenters, &numOfDataCenters);
 
     if (res != SUCCESS) {

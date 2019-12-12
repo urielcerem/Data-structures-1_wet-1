@@ -19,12 +19,13 @@ typedef enum {
 } StatusTypeDS;
 
 class DataStructure {
-	AVLTree <DataCenter> data_centers_tree;
-	AVLTree <double> ranked_by_linux;
-	AVLTree <double> ranked_by_windows;
+	
 	int num_of_data_centers;
 
 public:
+	AVLTree <DataCenter> data_centers_tree;
+	AVLTree <double> ranked_by_linux;
+	AVLTree <double> ranked_by_windows;
 
 	explicit DataStructure(int num_centers = 0) : num_of_data_centers(num_centers) {}
 	~DataStructure() = default;
