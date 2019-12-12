@@ -13,21 +13,21 @@ typedef enum {
 } StatusTypeDC;
 
 class Server {
-	int id;
 	int os;
-	ListItem <Server*>* pointer;
+	ListItem <Server>* pointer;
 public:
-	explicit Server(int id = 0, int os = 0, ListItem <Server*>* pointer = nullptr) :
+	int id;
+	explicit Server(int id = 0, int os = 0, ListItem <Server>* pointer = nullptr) :
 		id(id), os(os), pointer(pointer) {}
 	~Server() = default;
 	Server(const Server& s) = default;
 	Server& operator=(const Server& s);
 	int & ID();
 	int & OS();
-	ListItem <Server*>* ptrToFreeList();
+	ListItem <Server>* ptrToFreeList();
 	StatusTypeDC updateOS();
-	StatusTypeDC updateID(int id);
-	void updatePointer(ListItem <Server*>* ptr);
+	StatusTypeDC updateID(int Id);
+	void updatePointer(ListItem <Server>* ptr);
 };
 
 class DataCenter {
@@ -36,8 +36,8 @@ class DataCenter {
 	Array <Server> servers;
 	int num_of_linux;
 	int num_of_windows;
-	List <Server*> free_linux;
-	List <Server*> free_windows;
+	List <Server> free_linux;
+	List <Server> free_windows;
 public:
 	DataCenter(int id, int num_of_servers);
 	~DataCenter() = default;
@@ -46,8 +46,8 @@ public:
 	int & serversAmount();
 	int & linuxAmount();
 	int & windowsAmont();
-	List <Server*> & FreeLinuxList();
-	List <Server*> & FreeWindowsList();
+	List <Server> & FreeLinuxList();
+	List <Server> & FreeWindowsList();
 	StatusTypeDC UpdateServerOs(int serverID);
 	StatusTypeDC freeServer(int serverID);
 	StatusTypeDC assignServer(int serverID);

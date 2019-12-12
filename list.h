@@ -9,11 +9,11 @@ using namespace std;
 template<class T>
 class ListItem {
 
-	T data;
 	ListItem<T>* next;
 	ListItem<T>* prev;
 
 public:
+	T data;
 	ListItem(const T& value) : data(value), next(NULL), prev(NULL) {}
 	~ListItem() {}
 
@@ -32,10 +32,11 @@ private:
 template <class T>
 class List {
 
-	ListItem<T>* head;
-	ListItem<T>* tail;
+
 
 public:
+	ListItem<T>* head;
+	ListItem<T>* tail;
 	List() : head(NULL), tail(NULL) {}
 	~List() {}
 

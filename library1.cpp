@@ -63,7 +63,7 @@ StatusType RemoveDataCenter(void *DS, int dataCenterID) {
 
 StatusType RequestServer(void *DS, int dataCenterID, int serverID, int os,
 	int *assignedID) {
-	if (DS == nullptr || dataCenterID < 1 || serverID < 1 || os < 0 || os > 1 || assignedID == NULL)
+	if (DS == nullptr || dataCenterID < 1 || serverID < 0 || os < 0 || os > 1 || assignedID == NULL)
 		return INVALID_INPUT;
 	DataStructure *DC_manager = (DataStructure *)DS;
 	DataCenter* DC = (*DC_manager).getDataCenter(dataCenterID);
@@ -75,31 +75,63 @@ StatusType RequestServer(void *DS, int dataCenterID, int serverID, int os,
 	if (s == nullptr)
 		return INVALID_INPUT;
 	if (s->ptrToFreeList() == nullptr)
+	{
 		switch (os) {
 		case 0: {
-			assignedID = &DC->FreeLinuxList().GetHead()->GetValue()->ID();
-			return (StatusType)DC->assignServer(
-				DC->FreeLinuxList().GetHead()->GetValue()->ID());
+			if (DC->FreeLinuxList().GetHead() != NULL)
+			{
+				*assignedID = DC->FreeLinuxList().GetHead()->data.ID();
+				//std::cout << *assignedID << std::endl;
+				return (StatusType)DC->assignServer(*assignedID);
+			}
+			else if (DC->FreeWindowsList().GetHead() != NULL)
+			{
+				*assignedID = DC->FreeWindowsList().GetHead()->data.ID();
+				return (StatusType)DC->assignServer(*assignedID);
+			}
+			else
+				return FAILURE;
 		}
 		case 1: {
-			assignedID = &DC->FreeWindowsList().GetHead()->GetValue()->ID();
-			return (StatusType)DC->assignServer(
-				DC->FreeWindowsList().GetHead()->GetValue()->ID());
+			if (DC->FreeWindowsList().GetHead() != NULL)
+			{
+				*assignedID = DC->FreeWindowsList().GetHead()->data.id;
+				return (StatusType)DC->assignServer(*assignedID);
+			}
+			else if (DC->FreeLinuxList().GetHead() != NULL)
+			{
+				*assignedID = DC->FreeLinuxList().GetHead()->data.ID();
+				//std::cout << *assignedID << std::endl;
+				return (StatusType)DC->assignServer(*assignedID);
+			}
+			else
+				return FAILURE;
 		}
 		default:
 			break;
 		}
+	}
 	else if (s->OS() != os) {
 		double old_linux_rank = DC->linuxAmount() + (1.0 / (DC->ID()));
-		double old_win_rank = DC->linuxAmount() + (1.0 / (DC->ID()));
-		DC->UpdateServerOs(s->ID());
-		DC->assignServer(s->ID());
+		double old_win_rank = DC->windowsAmont() + (1.0 / (DC->ID()));
+		//std::cout << "old_linux_rank = " << old_linux_rank << std::endl;
+		//std::cout << "old_win_rank = " << old_win_rank << std::endl;
 		DC_manager->RemoveRank(old_linux_rank, 0);
 		DC_manager->RemoveRank(old_win_rank, 1);
-		DC_manager->AddRank(DC->ID(), (DC->linuxAmount() + (1.0 / (DC->ID()))), 0);
-		DC_manager->AddRank(DC->ID(), (DC->windowsAmont() + (1.0 / (DC->ID()))), 1);
+		DC->UpdateServerOs(s->ID());
+		DC->assignServer(s->ID());
+		double new_linux_rank = DC->linuxAmount() + (1.0 / (DC->ID()));
+		double new_win_rank = DC->windowsAmont() + (1.0 / (DC->ID()));
+		//std::cout << "new_linux_rank = " << new_linux_rank << std::endl;
+		//std::cout << "new_win_rank = " << new_win_rank << std::endl;
+		DC_manager->AddRank(DC->ID(), new_linux_rank, 0);
+		DC_manager->AddRank(DC->ID(), new_win_rank, 1);
+		*assignedID = serverID;
 	}
-	else DC->assignServer(s->ID());
+	else {
+		DC->assignServer(s->ID());
+		*assignedID = serverID;
+	}
 
 	return SUCCESS;
 }
@@ -116,6 +148,8 @@ StatusType FreeServer(void *DS, int dataCenterID, int serverID) {
 	Server *s = DC->getServer(serverID);
 	if (s == nullptr)
 		return INVALID_INPUT;
+	if (s->ptrToFreeList() != NULL)
+		return FAILURE;
 	else return (StatusType)DC->freeServer(s->ID());
 }
 
