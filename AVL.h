@@ -212,6 +212,7 @@ AVLNode<T>* deleteNode(AVLNode<T>* root, double key)
             AVLNode<T>* temp = getNextMinValue(root);
 
             root->key = temp->key;
+			root->data = temp->data;
 
             // Delete the inorder successor
             root->right = deleteNode(root->right,
@@ -291,7 +292,7 @@ template <class T>
 T* AVLTree<T>::Find(double key) {
     AVLNode<T>* data_node;
     data_node = findKey(root, key);
-    return &data_node->data;
+    return &(data_node->data);
 }
 
 

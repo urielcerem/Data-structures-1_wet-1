@@ -49,6 +49,8 @@ StatusType RemoveDataCenter(void *DS, int dataCenterID) {
 	StatusTypeDS output_ds;
 	double linux_key = data_center->linuxAmount() + (1.0 / dataCenterID);
 	double windows_key = data_center->windowsAmont() + (1.0 / dataCenterID);
+	//std:cout << linux_key << std::endl;
+	//std:cout << windows_key << std::endl;
 	output_ds = ds->RemoveRank(linux_key, 0);
 	if (output_ds != SUCCESS_DS)
 		return (StatusType)output_ds;
@@ -165,7 +167,7 @@ StatusType GetDataCentersByOS(void *DS, int os, int **dataCenters, int* numOfDat
 	*dataCenters = (int *)malloc(num_of_servers * sizeof(int));
 	//preordar traversal on an avl tree
 	AVLNode<double>* root = ds->GetRootByOs(os);
-	int counter = 0;
+	int counter = num_of_servers - 1;
 	FillArray(dataCenters, &counter, root);
 	return SUCCESS;
 }
@@ -173,10 +175,13 @@ StatusType GetDataCentersByOS(void *DS, int os, int **dataCenters, int* numOfDat
 void FillArray(int** dataCenters, int* counter, AVLNode<double>* root) {
 	if (root != NULL)
 	{
-		FillArray(dataCenters, counter, root->right);
-		(*dataCenters)[*counter] = root->data;
-		(*counter)++;
 		FillArray(dataCenters, counter, root->left);
+		if (*counter > -1)
+		{
+		(*dataCenters)[*counter] = root->data;
+		(*counter)--;
+		}
+		FillArray(dataCenters, counter, root->right);
 	}
 }
 
